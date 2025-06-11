@@ -21,7 +21,7 @@ const TodoScreen = () => {
   const generateDummyTodos = (count: number): ITodo[] => {
     return Array.from({ length: count }, (_, index) => {
       // Randomly generate a date within the last 10 days
-      const daysAhead = Math.floor(Math.random() * Math.round(count / 2));
+      const daysAhead = Math.floor(Math.random() * 30);
       const createdAt = new Date(Date.now() + daysAhead * 24 * 60 * 60 * 1000);
       // Randomly generate an updatedAt after createdAt
       const updatedAt = new Date(
@@ -93,10 +93,14 @@ const TodoScreen = () => {
   };
 
   useEffect(() => {
-    const sectionTodos = convertToSectionTodos(todos);
+    const inDateTodos = todos.filter((todo) => {
+      return todo?.createdAt?.startsWith(selectedDate);
+    });
 
-    setSectionTodos(sectionTodos);
-  }, [todos]);
+    const inDateSectionTodos = convertToSectionTodos(inDateTodos);
+
+    setSectionTodos(inDateSectionTodos);
+  }, [todos, selectedDate]);
 
   const convertToSectionTodos = (todos: ITodo[]) => {
     return todos.reduce((acc, todo) => {
