@@ -1,15 +1,6 @@
-import DateSelector from "@/components/DateSelector/DateSelector";
-import TodoItem from "@/components/TodoItem/TodoItem";
+import { Redirect } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  SectionList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
 
 const TodoScreen = () => {
   const todoTypes = ["personal", "task", "learn", "work", "home"] as const;
@@ -126,77 +117,79 @@ const TodoScreen = () => {
     setSectionTodos(inDateSectionTodos);
   };
 
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container} edges={["top"]}>
-        <View>
-          <Text style={styles.header}>TODAY</Text>
-          <DateSelector onDateSelected={handleChangeDate} />
-        </View>
-        <SectionList
-          style={{ flex: 1 }}
-          sections={sectionTodos}
-          renderItem={({ item }) => {
-            return (
-              <TodoItem
-                todo={item}
-                selectedId={selectedId}
-                onToggle={handleToggle}
-                onDelete={handleDelete}
-                onEdit={handleEdit}
-                onLongPress={(id) => {
-                  setSelectedId(id);
-                }}
-              />
-            );
-          }}
-          keyExtractor={(item) => item.id.toString()}
-          renderSectionHeader={({ section: { title } }) => (
-            <Text style={styles.sectionHeader}>{title}</Text>
-          )}
-        />
-        {/* Footer input */}
-        <View style={styles.footerContainer}>
-          <TextInput
-            value={inputValue}
-            onChangeText={setInputValue}
-            onSubmitEditing={() => {
-              handleAddTodo(inputValue);
-              setInputValue("");
-            }}
-            returnKeyType="done"
-            autoCapitalize="none"
-            autoCorrect={false}
-            style={styles.input}
-            placeholder="New todo title"
-          />
-          <View
-            style={{
-              backgroundColor: "#393433",
+  // return (
+  //   <SafeAreaProvider>
+  //     <SafeAreaView style={styles.container} edges={["top"]}>
+  //       <View>
+  //         <Text style={styles.header}>TODAY</Text>
+  //         <DateSelector onDateSelected={handleChangeDate} />
+  //       </View>
+  //       <SectionList
+  //         style={{ flex: 1 }}
+  //         sections={sectionTodos}
+  //         renderItem={({ item }) => {
+  //           return (
+  //             <TodoItem
+  //               todo={item}
+  //               selectedId={selectedId}
+  //               onToggle={handleToggle}
+  //               onDelete={handleDelete}
+  //               onEdit={handleEdit}
+  //               onLongPress={(id) => {
+  //                 setSelectedId(id);
+  //               }}
+  //             />
+  //           );
+  //         }}
+  //         keyExtractor={(item) => item.id.toString()}
+  //         renderSectionHeader={({ section: { title } }) => (
+  //           <Text style={styles.sectionHeader}>{title}</Text>
+  //         )}
+  //       />
+  //       {/* Footer input */}
+  //       <View style={styles.footerContainer}>
+  //         <TextInput
+  //           value={inputValue}
+  //           onChangeText={setInputValue}
+  //           onSubmitEditing={() => {
+  //             handleAddTodo(inputValue);
+  //             setInputValue("");
+  //           }}
+  //           returnKeyType="done"
+  //           autoCapitalize="none"
+  //           autoCorrect={false}
+  //           style={styles.input}
+  //           placeholder="New todo title"
+  //         />
+  //         <View
+  //           style={{
+  //             backgroundColor: "#393433",
 
-              padding: 10,
-              borderRadius: 8,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                handleAddTodo(inputValue);
-                setInputValue("");
-              }}
-            >
-              <Text
-                style={{
-                  color: "#F3EFEE",
-                }}
-              >
-                Add
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
+  //             padding: 10,
+  //             borderRadius: 8,
+  //           }}
+  //         >
+  //           <TouchableOpacity
+  //             onPress={() => {
+  //               handleAddTodo(inputValue);
+  //               setInputValue("");
+  //             }}
+  //           >
+  //             <Text
+  //               style={{
+  //                 color: "#F3EFEE",
+  //               }}
+  //             >
+  //               Add
+  //             </Text>
+  //           </TouchableOpacity>
+  //         </View>
+  //       </View>
+  //     </SafeAreaView>
+  //   </SafeAreaProvider>
+  // );
+
+  return <Redirect href="/(tabs)" />;
 };
 
 export default TodoScreen;
